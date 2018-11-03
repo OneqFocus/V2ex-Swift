@@ -83,10 +83,11 @@ class HomeViewController: UIViewController {
         })
         footer?.centerOffset = -4
         self.tableView.mj_footer = footer
-        
+
         self.themeChangedHandler = {[weak self] (style) -> Void in
             self?.tableView.backgroundColor = V2EXColor.colors.v2_backgroundColor
         }
+
     }
     func setupNavigationItem(){
         let leftButton = NotificationMenuButton()
@@ -98,7 +99,8 @@ class HomeViewController: UIViewController {
         let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         rightButton.contentMode = .center
         rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15)
-        rightButton.setImage(UIImage.imageUsedTemplateMode("ic_more_horiz_36pt")!.withRenderingMode(.alwaysTemplate), for: UIControlState())
+//        rightButton.setImage(UIImage.imageUsedTemplateMode("ic_more_horiz_36pt")!.withRenderingMode(.alwaysTemplate), for: UIControlState())
+		rightButton.setImage(UIImage.imageUsedTemplateMode("ic_more_horiz_36pt"), for:.normal)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
         rightButton.addTarget(self, action: #selector(HomeViewController.rightClick), for: .touchUpInside)
 
