@@ -30,11 +30,8 @@ extension TopicListApi: V2EXTargetType {
             return ["p": page]
         case let .nodeTopicList(_, page):
             return ["p": page]
-//        default:
-//            return nil
         }
     }
-    
     var path: String {
         switch self {
         case let .topicList(tab, page):

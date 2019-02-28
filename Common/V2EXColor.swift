@@ -330,16 +330,22 @@ extension NSObject {
             let closure = unsafeBitCast(closureObject, to: ThemeChangedClosure.self)
             return closure
         }
-        set{
+        set {
             guard let value = newValue else{
                 return
             }
             let dealObject: AnyObject = unsafeBitCast(value, to: AnyObject.self)
 			/// objc_setAssociatedObject的四个参数object,key,value,type
-            objc_setAssociatedObject(self, &AssociatedKeys.thmemChanged,dealObject,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self,
+									 &AssociatedKeys.thmemChanged,
+									 dealObject,
+									 objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             //设置KVO监听
-            self.kvoController.observe(V2EXColor.sharedInstance, keyPath: "style", options: [.initial,.new] , block: {[weak self] (nav, color, change) -> Void in
-                self?.themeChangedHandler?(V2EXColor.sharedInstance.style)
+            self.kvoController.observe(V2EXColor.sharedInstance,
+									   keyPath: "style",
+									   options: [.initial,.new] ,
+									   block: {[weak self] (nav, color, change) -> Void in
+                	self?.themeChangedHandler?(V2EXColor.sharedInstance.style)
                 }
             )
         }

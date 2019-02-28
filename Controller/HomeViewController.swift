@@ -22,7 +22,7 @@ let kHomeTab = "me.fin.homeTab"
 class HomeViewController: UIViewController {
     var topicList:Array<TopicListModel>?
     var tab:String? = nil {
-        didSet{
+        didSet {
             var name = "全部"
             for model in RightViewControllerRightNodes {
                 if model.nodeTab == tab {
@@ -66,8 +66,14 @@ class HomeViewController: UIViewController {
         self.setupNavigationItem()
         
         //监听程序即将进入前台运行、进入后台休眠 事件
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.applicationWillEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.applicationDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self,
+											   selector: #selector(HomeViewController.applicationWillEnterForeground),
+											   name: NSNotification.Name.UIApplicationWillEnterForeground,
+											   object: nil)
+        NotificationCenter.default.addObserver(self,
+											   selector: #selector(HomeViewController.applicationDidEnterBackground),
+											   name: NSNotification.Name.UIApplicationDidEnterBackground,
+											   object: nil)
         
         self.view.addSubview(self.tableView);
         self.tableView.snp.makeConstraints{ (make) -> Void in

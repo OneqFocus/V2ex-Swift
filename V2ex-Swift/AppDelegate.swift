@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         URLProtocol.registerClass(WebViewImageProtocol.self)
         
         self.window = UIWindow();
-        self.window?.frame=UIScreen.main.bounds;
+        self.window?.frame = UIScreen.main.bounds;
         self.window?.makeKeyAndVisible();
 
         let centerNav = V2EXNavigationController(rootViewController: HomeViewController());
@@ -37,10 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             drawerController.view.backgroundColor = V2EXColor.colors.v2_backgroundColor
         }
         
-        drawerController.maximumLeftDrawerWidth=230;
+        drawerController.maximumLeftDrawerWidth = UIScreen.main.bounds.size.width * 2 / 3;
         drawerController.maximumRightDrawerWidth = rightViewController.maximumRightDrawerWidth()
-        drawerController.openDrawerGestureModeMask=OpenDrawerGestureMode.panningCenterView
-        drawerController.closeDrawerGestureModeMask=CloseDrawerGestureMode.all;
+        drawerController.openDrawerGestureModeMask = OpenDrawerGestureMode.panningCenterView
+        drawerController.closeDrawerGestureModeMask = CloseDrawerGestureMode.all;
         self.window?.rootViewController = drawerController;
 
         V2Client.sharedInstance.drawerController = drawerController
@@ -49,7 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if DEBUG
             let fpsLabel = V2FPSLabel(frame: CGRect(x: 15, y: SCREEN_HEIGHT-40,width: 55,height: 20));
             self.window?.addSubview(fpsLabel);
-        #else
         #endif
         
         SVProgressHUD.setForegroundColor(UIColor(white: 1, alpha: 1))

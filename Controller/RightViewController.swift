@@ -9,6 +9,7 @@
 import UIKit
 import FXBlurView
 let RightViewControllerRightNodes = [
+	rightNodeModel(nodeName: NSLocalizedString("all"), nodeTab: "all"),
     rightNodeModel(nodeName: NSLocalizedString("tech" ), nodeTab: "tech"),
     rightNodeModel(nodeName: NSLocalizedString("creative" ), nodeTab: "creative"),
     rightNodeModel(nodeName: NSLocalizedString("play" ), nodeTab: "play"),
@@ -18,7 +19,6 @@ let RightViewControllerRightNodes = [
     rightNodeModel(nodeName: NSLocalizedString("city" ), nodeTab: "city"),
     rightNodeModel(nodeName: NSLocalizedString("qna" ), nodeTab: "qna"),
     rightNodeModel(nodeName: NSLocalizedString("hot"), nodeTab: "hot"),
-    rightNodeModel(nodeName: NSLocalizedString("all"), nodeTab: "all"),
     rightNodeModel(nodeName: NSLocalizedString("r2" ), nodeTab: "r2"),
     rightNodeModel(nodeName: NSLocalizedString("nodes" ), nodeTab: "nodes"),
     rightNodeModel(nodeName: NSLocalizedString("members" ), nodeTab: "members"),
@@ -27,12 +27,12 @@ class RightViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let rightNodes = RightViewControllerRightNodes
     var currentSelectedTabIndex = 0;
     
-    var backgroundImageView:UIImageView?
+    var backgroundImageView : UIImageView?
     var frostedView = FXBlurView()
     
-    fileprivate var _tableView :UITableView!
+    fileprivate var _tableView : UITableView!
     fileprivate var tableView: UITableView {
-        get{
+        get {
             if(_tableView != nil){
                 return _tableView!;
             }
@@ -111,6 +111,7 @@ class RightViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
         return 100
     }
+	// MARK:----------tableViewDelegate----------
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rightNodes.count;
     }
