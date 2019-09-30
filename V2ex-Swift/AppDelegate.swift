@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         URLProtocol.registerClass(WebViewImageProtocol.self)
         
-        self.window = UIWindow();
-        self.window?.frame=UIScreen.main.bounds;
-        self.window?.makeKeyAndVisible();
+        self.window = UIWindow()
+        self.window?.frame = UIScreen.main.bounds
+        self.window?.makeKeyAndVisible()
 
         let centerNav = V2EXNavigationController(rootViewController: HomeViewController());
         let leftViewController = LeftViewController();
@@ -33,14 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let drawerController = DrawerController(centerViewController: centerNav, leftDrawerViewController: leftViewController, rightDrawerViewController: rightViewController);
         
         self.window?.themeChangedHandler = {[weak self] (style) -> Void in
-            self?.window?.backgroundColor = V2EXColor.colors.v2_backgroundColor;
+			self?.window?.backgroundColor = V2EXColor.colors.v2_backgroundColor
             drawerController.view.backgroundColor = V2EXColor.colors.v2_backgroundColor
         }
         
-        drawerController.maximumLeftDrawerWidth=230;
+        drawerController.maximumLeftDrawerWidth = 230;
         drawerController.maximumRightDrawerWidth = rightViewController.maximumRightDrawerWidth()
-        drawerController.openDrawerGestureModeMask=OpenDrawerGestureMode.panningCenterView
-        drawerController.closeDrawerGestureModeMask=CloseDrawerGestureMode.all;
+        drawerController.openDrawerGestureModeMask = OpenDrawerGestureMode.panningCenterView
+        drawerController.closeDrawerGestureModeMask = CloseDrawerGestureMode.all;
         self.window?.rootViewController = drawerController;
 
         V2Client.sharedInstance.drawerController = drawerController

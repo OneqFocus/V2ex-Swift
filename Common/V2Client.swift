@@ -18,12 +18,13 @@ class V2Client: NSObject {
     
     // 当前程序中，最上层的 NavigationController
     var topNavigationController : UINavigationController {
-        get{
+        get {
             return V2Client.getTopNavigationController(V2Client.sharedInstance.centerNavigation!)
         }
     }
     
     fileprivate class func getTopNavigationController(_ currentNavigationController:UINavigationController) -> UINavigationController {
+		// 递归
         if let topNav = currentNavigationController.visibleViewController?.navigationController{
             if topNav != currentNavigationController && topNav.isKind(of: UINavigationController.self){
                 return getTopNavigationController(topNav)

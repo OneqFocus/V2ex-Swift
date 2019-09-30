@@ -22,10 +22,11 @@ let kHomeTab = "me.fin.homeTab"
 class HomeViewController: UIViewController {
     var topicList:Array<TopicListModel>?
     var tab:String? = nil {
-        didSet{
+        didSet {
             var name = "全部"
             for model in RightViewControllerRightNodes {
                 if model.nodeTab == tab {
+					// ??为空合运算符，如是前值为空，则表达式为后值
                     name = model.nodeName ?? ""
                     break;
                 }
@@ -37,16 +38,14 @@ class HomeViewController: UIViewController {
     
     fileprivate var _tableView :UITableView!
     fileprivate var tableView: UITableView {
-        get{
+        get {
             if(_tableView != nil){
                 return _tableView!;
             }
             _tableView = UITableView();
             _tableView.cancelEstimatedHeight()
             _tableView.separatorStyle = UITableViewCellSeparatorStyle.none;
-            
             regClass(_tableView, cell: HomeTopicListTableViewCell.self);
-            
             _tableView.delegate = self;
             _tableView.dataSource = self;
             return _tableView!;
@@ -98,12 +97,13 @@ class HomeViewController: UIViewController {
         let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
         rightButton.contentMode = .center
         rightButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -15)
-        rightButton.setImage(UIImage.imageUsedTemplateMode("ic_more_horiz_36pt")!.withRenderingMode(.alwaysTemplate), for: UIControlState())
+		let rightImage = UIImage.imageUsedTemplateMode("ic_more_horiz_36pt")?.withRenderingMode(.alwaysTemplate)
+		rightButton.setImage(rightImage, for: UIControlState())
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
         rightButton.addTarget(self, action: #selector(HomeViewController.rightClick), for: .touchUpInside)
 
     }
-    @objc func leftClick(){
+	@objc func leftClick(){
         V2Client.sharedInstance.drawerController?.toggleLeftDrawerSide(animated: true, completion: nil)
     }
     @objc func rightClick(){

@@ -68,8 +68,7 @@ class V2RefreshFooter: MJRefreshAutoFooter {
             if V2EXColor.sharedInstance.style == V2EXColor.V2EXColorStyleDefault {
                 self?.loadingView?.activityIndicatorViewStyle = .gray
                 self?.stateLabel!.textColor = UIColor(white: 0, alpha: 0.3)
-            }
-            else{
+            } else{
                 self?.loadingView?.activityIndicatorViewStyle = .white
                 self?.stateLabel!.textColor = UIColor(white: 1, alpha: 0.3)
             }

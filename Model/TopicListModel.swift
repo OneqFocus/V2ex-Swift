@@ -7,16 +7,20 @@
 //
 
 import UIKit
-
+// JSON和模型转换
 import ObjectMapper
+// 网络库
 import Alamofire
-
+// HTML/XML 解析器
 import Ji
+// 富文本
 import YYText
+// KVO监听
 import KVOController
 
+// HtmlModelArrayProtocol 实现这个协议的类，可用于Moya自动解析出这个类的model的对象数组
 class TopicListModel:NSObject, HtmlModelArrayProtocol {
-
+	// HtmlModelArrayProtocol 协议方法
     class func createModelArray(ji: Ji) -> [Any] {
         var resultArray:[TopicListModel] = []
         if let aRootNode = ji.xPath("//body/div[@id='Wrapper']/div[@class='content']/div[@class='box']/div[@class='cell item']"){

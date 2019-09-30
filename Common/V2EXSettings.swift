@@ -20,7 +20,7 @@ class V2EXSettings: NSObject {
         get {
             return UserDefaults.standard.object(forKey: keyPrefix + key) as? String
         }
-        set {
+		set {
             UserDefaults.standard.setValue(newValue, forKey: keyPrefix + key )
         }
     }

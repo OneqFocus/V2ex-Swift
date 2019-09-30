@@ -78,8 +78,7 @@ class V2User: NSObject {
         get {
             if let len = self.username?.Lenght , len > 0 {
                 return true
-            }
-            else {
+            } else {
                 return false
             }
         }
@@ -130,8 +129,8 @@ class V2User: NSObject {
 
     /**
      获取once
-
      - parameter url:               有once存在的url
+	 @escaping 逃逸闭包
      */
     func getOnce(_ url:String = V2EXURL+"signin" , completionHandler: @escaping (V2Response) -> Void) {
         Alamofire.request(url, headers: MOBILE_CLIENT_HEADERS).responseJiHtml {
@@ -159,7 +158,13 @@ class V2User: NSObject {
         if let notification = notification {
 
             self.notificationCount = 0;
-
+			/*
+			NSRegularExpression 正则表达式类
+			throws抛出异常, 那么就必须通过try来处理
+			try : 标准的处理方式, 该方式必须结合do catch来处理
+			try? :告诉系统可能有错, 也可能没错, 如果发生错误, 那么返回nil, 如果没有发生错误, 会见数据包装成一个可选类型的值返回给我们，这种使用方式, 相当于忽略错误
+			try! : 告诉系统一定没错, 如果发生错误, 程序会崩溃. 不推荐使用
+			*/
             let regex = try! NSRegularExpression(pattern: "V2EX \\([0-9]+\\)", options: [.caseInsensitive])
             regex.enumerateMatches(in: notification, options: [.withoutAnchoringBounds], range: NSMakeRange(0, notification.Lenght), using: { (result, flags, stop) -> Void in
                 if let result = result {

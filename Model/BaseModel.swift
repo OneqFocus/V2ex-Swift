@@ -10,9 +10,14 @@ import UIKit
 
 import ObjectMapper
 import Ji
+// 简单的网络请求类
 import Moya
 
+// Mappable 支持嵌套转换
+// Map --- A class used for holding mapping data
 class BaseJsonModel: Mappable {
+	// required 强制子类重写此方法
+	// 重写父类的required init方法，前面不用加override
     required init?(map: Map) {
         
     }
@@ -21,7 +26,7 @@ class BaseJsonModel: Mappable {
     }
 }
 
-
+// JiNode xml节点
 protocol BaseHtmlModelProtocol {
     init(rootNode:JiNode)
 }

@@ -35,7 +35,7 @@ func createImageWithColor(_ color:UIColor,size:CGSize) -> UIImage {
 
 //使用协议 方便以后切换颜色配置文件、或者做主题配色之类乱七八糟产品经理最爱的功能
 
-protocol V2EXColorProtocol{
+protocol V2EXColorProtocol {
     var v2_backgroundColor: UIColor { get }
     var v2_navigationBarTintColor: UIColor { get }
     var v2_TopicListTitleColor : UIColor { get }
@@ -68,13 +68,13 @@ class V2EXDefaultColor: NSObject,V2EXColorProtocol {
         super.init()
     }
     
-    var v2_backgroundColor : UIColor{
-        get{
+    var v2_backgroundColor : UIColor {
+        get {
             return colorWith255RGB(242, g: 243, b: 245);
         }
     }
     var v2_navigationBarTintColor : UIColor{
-        get{
+        get {
             return colorWith255RGB(102, g: 102, b: 102);
         }
     }
@@ -257,35 +257,33 @@ class V2EXColor :NSObject  {
     static let V2EXColorStyleDefault = "Default"
     static let V2EXColorStyleDark = "Dark"
     
-    fileprivate static var _colors:V2EXColorProtocol?
-    static var colors :V2EXColorProtocol {
-        get{
-            
+    fileprivate static var _colors: V2EXColorProtocol?
+    static var colors : V2EXColorProtocol {
+        get {
             if let c = V2EXColor._colors {
                 return c
-            }
-            else{
-                if V2EXColor.sharedInstance.style == V2EXColor.V2EXColorStyleDefault{
+            } else {
+                if V2EXColor.sharedInstance.style == V2EXColor.V2EXColorStyleDefault {
                     return V2EXDefaultColor.sharedInstance
-                }
-                else{
+                } else{
                     return V2EXDarkColor.sharedInstance
                 }
             }
             
         }
-        set{
+        set {
             V2EXColor._colors = newValue
         }
     }
-    
-    @objc dynamic var style:String
+    // 标记为dynamic的变量/函数会隐式的加上@objc关键字，它会使用OC的runtime机制
+    @objc dynamic var style : String
+	
     static let sharedInstance = V2EXColor()
-    fileprivate override init(){
+	
+	fileprivate override init(){
         if let style = V2EXSettings.sharedInstance[V2EXColor.STYLE_KEY] {
             self.style = style
-        }
-        else{
+        } else {
             self.style = V2EXColor.V2EXColorStyleDefault
         }
         super.init()
@@ -297,8 +295,7 @@ class V2EXColor :NSObject  {
         
         if style == V2EXColor.V2EXColorStyleDefault {
             V2EXColor.colors = V2EXDefaultColor.sharedInstance
-        }
-        else{
+        } else{
             V2EXColor.colors = V2EXDarkColor.sharedInstance
         }
         
@@ -315,28 +312,39 @@ extension NSObject {
     }
     
     /// 当前主题更改时、第一次设置时 自动调用的闭包
+	/* 	@convention(swift) : 表明这个是一个swift的闭包
+		@convention(block) ：表明这个是一个兼容oc的block的闭包
+		@convention(c) : 表明这个是兼容c的函数指针的闭包。
+		typealias 类似 typedef
+		ThemeChangedClosure  为 (_ style:String) -> Void 类型闭包
+	*/
     public typealias ThemeChangedClosure = @convention(block) (_ style:String) -> Void
     
     /// 自动调用的闭包
     /// 设置时，会设置一个KVO监听，当V2Style.style更改时、第一次赋值时 会自动调用这个闭包
     var themeChangedHandler:ThemeChangedClosure? {
         get {
+			// 得到分类属性值
             let closureObject: AnyObject? = objc_getAssociatedObject(self, &AssociatedKeys.thmemChanged) as AnyObject?
-            guard closureObject != nil else{
+            guard closureObject != nil else {
                 return nil
             }
+			// unsafeBitCast 函数将Swift闭包转为Objective-C的兼容的对象
             let closure = unsafeBitCast(closureObject, to: ThemeChangedClosure.self)
             return closure
         }
-        set{
+        set {
+			// 判断是否有值，并解包
             guard let value = newValue else{
                 return
             }
+			// unsafeBitCast 会将第一个参数的内容按照第二个参数的类型进行转换，而不去关心实际是不是可行
             let dealObject: AnyObject = unsafeBitCast(value, to: AnyObject.self)
+			
             objc_setAssociatedObject(self, &AssociatedKeys.thmemChanged,dealObject,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            //设置KVO监听
+            // 设置KVO监听
             self.kvoController.observe(V2EXColor.sharedInstance, keyPath: "style", options: [.initial,.new] , block: {[weak self] (nav, color, change) -> Void in
-                self?.themeChangedHandler?(V2EXColor.sharedInstance.style)
+                	self?.themeChangedHandler?(V2EXColor.sharedInstance.style)
                 }
             )
         }

@@ -13,7 +13,7 @@ class V2RefreshHeader: MJRefreshHeader {
     var loadingView:UIActivityIndicatorView?
     var arrowImage:UIImageView?
     
-    override var state:MJRefreshState{
+    override var state:MJRefreshState {
         didSet{
             switch state {
             case .idle:
@@ -52,8 +52,7 @@ class V2RefreshHeader: MJRefreshHeader {
             if V2EXColor.sharedInstance.style == V2EXColor.V2EXColorStyleDefault {
                 self?.loadingView?.activityIndicatorViewStyle = .gray
                 self?.arrowImage?.tintColor = UIColor.gray
-            }
-            else{
+            } else{
                 self?.loadingView?.activityIndicatorViewStyle = .white
                 self?.arrowImage?.tintColor = UIColor.gray
             }
@@ -61,7 +60,7 @@ class V2RefreshHeader: MJRefreshHeader {
     }
     
     /**
-     在这里设置子控件的位置和尺寸
+     	在这里设置子控件的位置和尺寸
      */
     override func placeSubviews(){
         super.placeSubviews()

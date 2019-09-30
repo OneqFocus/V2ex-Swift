@@ -18,36 +18,33 @@ class V2EXNavigationController: UINavigationController {
     var shadowImage:UIImage?
     /// navigationBar 背景透明度
     var navigationBarAlpha:CGFloat {
-        get{
+        get {
             return  self.frostedView.alpha
         }
         set {
             var value = newValue
             if newValue > 1 {
                 value = 1
-            }
-            else if value < 0 {
+            } else if value < 0 {
                 value = 0
             }
             self.frostedView.alpha = newValue
-            if(value == 1){
-                if self.navigationBar.shadowImage != nil{
+            if (value == 1){
+                if self.navigationBar.shadowImage != nil {
                     self.navigationBar.shadowImage = nil
                 }
-            }
-            else {
-                if self.navigationBar.shadowImage == nil{
+            } else {
+                if self.navigationBar.shadowImage == nil {
                     self.navigationBar.shadowImage = UIImage()
                 }
             }
         }
     }
-    override var preferredStatusBarStyle: UIStatusBarStyle{
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             if V2EXColor.sharedInstance.style == V2EXColor.V2EXColorStyleDefault {
                 return .default
-            }
-            else{
+            } else {
                 return .lightContent
             }
         }
@@ -55,19 +52,15 @@ class V2EXNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
         self.navigationBar.setBackgroundImage(createImageWithColor(UIColor.clear), for: .default)
-
+		
         let maskingView = UIView()
-        
         maskingView.isUserInteractionEnabled = false
         maskingView.backgroundColor = UIColor(white: 0, alpha: 0.0);
         self.navigationBar.superview!.insertSubview(maskingView, belowSubview: self.navigationBar)
         maskingView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: NavigationBarHeight)
-//        maskingView.snp.makeConstraints{ (make) -> Void in
-//            make.left.bottom.right.equalTo(self.navigationBar)
-//            make.top.equalTo(self.navigationBar).offset(-44);
-//        }
-
+		
         self.frostedView.isUserInteractionEnabled = false
         self.frostedView.clipsToBounds = true
         maskingView.addSubview(self.frostedView);
@@ -92,8 +85,7 @@ class V2EXNavigationController: UINavigationController {
                 UITextField.appearance().keyboardAppearance = .light
                 YYTextView.appearance().keyboardAppearance = .light
                 
-            }
-            else{
+            } else {
                 self?.frostedView.barStyle = .black
                 self?.setNeedsStatusBarAppearanceUpdate()
                 
